@@ -1,0 +1,17 @@
+{
+  "name": "custom-whatsapp-bot",
+  "version": "1.0.0",
+  "description": "WhatsApp Bot using WhatsApp Web session (QR Code scanning) with direct Google Sheets integration, bypassing Meta Developers and SendPulse",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "googleapis": "^137.1.0",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.23.0"
+  }
+}
