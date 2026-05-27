@@ -39,4 +39,28 @@ async function appendToSheet(spreadsheetId, sheetName, rowValues) {
   }
 }
 
-module.exports = { appendToSheet };
+/**
+ * Verifica si un número de teléfono ya está registrado en la hoja.
+ * @param {string} spreadsheetId ID de la hoja de cálculo.
+ * @param {string} sheetName Nombre de la hoja.
+ * @param {string} phone Número a buscar.
+ * @returns {Promise<boolean>} true si ya existe.
+ */
+async function isPhoneRegistered(spreadsheetId, sheetName, phone) {
+  try {
+    const client = await auth.getClient();
+    const sheets = google.sheets({ version: 'v4', auth: client });
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range: `${sheetName}!B:B`,
+    });
+    const rows = response.data.values || [];
+    const normalized = phone.replace(/\D/g, '');
+    return rows.some(row => row[0] && row[0].replace(/\D/g, '') === normalized);
+  } catch (e) {
+    console.error('❌ Error al comprobar número en Sheets:', e.message);
+    return false;
+  }
+}
+
+module.exports = { appendToSheet, isPhoneRegistered };
